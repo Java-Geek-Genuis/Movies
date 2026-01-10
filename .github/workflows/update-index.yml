@@ -17,7 +17,12 @@ jobs:
     - name: Generate index.json
       run: |
         echo "{ \"movies\": [" > movies/index.json
-        ls movies/*.json | sed 's|movies/||' | sed 's|^|  \"|' | sed 's|$|\",|' >> movies/index.json
+        for f in movies/*.json; do
+          fname=$(basename "$f")
+          if [ "$fname" != "index.json" ]; then
+            echo "  \"$fname\"," >> movies/index.json
+          fi
+        done
         sed -i '$ s/,$//' movies/index.json
         echo "] }" >> movies/index.json
 
