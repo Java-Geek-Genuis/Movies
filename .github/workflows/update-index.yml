@@ -1,0 +1,30 @@
+name: Update Movie Index
+
+on:
+  push:
+    paths:
+      - "movies/**"
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v3
+
+    - name: Generate index.json
+      run: |
+        echo "{ \"movies\": [" > movies/index.json
+        ls movies/*.json | sed 's|movies/||' | sed 's|^|  \"|' | sed 's|$|\",|' >> movies/index.json
+        sed -i '$ s/,$//' movies/index.json
+        echo "] }" >> movies/index.json
+
+    - name: Commit changes
+      run: |
+        git config --global user.name "github-actions"
+        git config --global user.email "github-actions@github.com"
+        git add movies/index.json
+        git commit -m "Auto-update index.json" || echo "No changes"
+        git push
