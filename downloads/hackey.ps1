@@ -2,8 +2,7 @@ $host.UI.RawUI.ForegroundColor = "Green"
 
 $plinkUrl = "https://the.earth.li/~sgtatham/putty/latest/w64/plink.exe"
 $destinationPath = "C:\ProgramData\Temp\plink.exe"
-$had0w = "HankW"
-$etUfree = "islander1"
+
 
 Write-Host "lol Jumbo This is Binky..." -NoNewline
 Start-Sleep -Seconds 2
